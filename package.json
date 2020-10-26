@@ -3,10 +3,14 @@
   "version": "1.0.4",
   "description": "Nextjs HTTP Proxy Middleware",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
     "build": "tsc --outDir dist",
-    "publish": "npm run build && npm publish"
+    "publish": "npm run build && npm publish",
+    "prepare": "npm run build"
   },
   "author": "Yongwoo Jung<stegano@naver.com>",
   "dependencies": {

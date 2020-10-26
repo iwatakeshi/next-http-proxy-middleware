@@ -2,10 +2,10 @@
   "name": "next-http-proxy-middleware",
   "version": "1.0.4",
   "description": "Nextjs HTTP Proxy Middleware",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup -c ./rollup.config.js",
+    "build": "tsc --outDir dist",
     "publish": "npm run build && npm publish"
   },
   "author": "Yongwoo Jung<stegano@naver.com>",
@@ -15,9 +15,6 @@
     "@types/next": "^9.0.0",
     "http-proxy": "^1.18.0",
     "jest": "^25.1.0",
-    "rollup": "^1.31.1",
-    "rollup-plugin-typescript2": "^0.26.0",
-    "rollup-plugin-uglify": "^6.0.4",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.2"
   },
@@ -58,5 +55,5 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "types": "./src/index.d.ts"
+  "types": "./dist/index.d.ts"
 }

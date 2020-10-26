@@ -1,6 +1,8 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import httpProxy from "http-proxy";
-import { NextHttpProxyMiddlewareOptions } from "./index.d";
+import httpProxy, { ServerOptions } from "http-proxy";
+export interface NextHttpProxyMiddlewareOptions extends ServerOptions {
+  pathRewrite?: { [key: string]: string };
+}
 
 /**
  * @see https://www.npmjs.com/package/http-proxy
@@ -44,12 +46,18 @@ const httpProxyMiddleware = async (
     if (pathRewrite) {
       req.url = rewritePath(req.url as string, pathRewrite);
     }
-    if(["POST", "PUT"].indexOf(req.method as string) >= 0 && typeof req.body === "object"){
+    if (
+      ["POST", "PUT"].indexOf(req.method as string) >= 0 &&
+      typeof req.body === "object"
+    ) {
       req.body = JSON.stringify(req.body);
     }
     proxy
       .once("proxyReq", ((proxyReq: any, req: any): void => {
-        if(["POST", "PUT"].indexOf(req.method as string) >= 0 && typeof req.body === "string"){
+        if (
+          ["POST", "PUT"].indexOf(req.method as string) >= 0 &&
+          typeof req.body === "string"
+        ) {
           proxyReq.write(req.body);
           proxyReq.end();
         }
@@ -58,7 +66,7 @@ const httpProxyMiddleware = async (
       .once("error", reject)
       .web(req, res, {
         changeOrigin: true,
-        ...httpProxyOptions
+        ...httpProxyOptions,
       });
   });
 
